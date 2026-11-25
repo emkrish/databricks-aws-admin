@@ -5,9 +5,9 @@ data "aws_region" "current" {}
 
 # Discover available Availability Zones
 
-data "aws_availability_zones" "available" {
-  state = "available"
-}
+# data "aws_availability_zones" "available" {
+#   state = "available"
+# }
 
 # Create VPC
 
@@ -62,9 +62,9 @@ locals {
 resource "aws_subnet" "public" {
   for_each = local.public_subnets
 
-  vpc_id                  = aws_vpc.databricks_vpc.id
-  cidr_block              = each.value.cidr
-  availability_zone       = data.aws_availability_zones.available.names[each.value.az_index]
+  vpc_id     = aws_vpc.databricks_vpc.id
+  cidr_block = each.value.cidr
+  # availability_zone       = data.aws_availability_zones.available.names[each.value.az_index]
   map_public_ip_on_launch = true
 
   tags = merge(var.common_tags, {
@@ -78,9 +78,9 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   for_each = local.private_subnets
 
-  vpc_id            = aws_vpc.databricks_vpc.id
-  cidr_block        = each.value.cidr
-  availability_zone = data.aws_availability_zones.available.names[each.value.az_index]
+  vpc_id     = aws_vpc.databricks_vpc.id
+  cidr_block = each.value.cidr
+  # availability_zone = data.aws_availability_zones.available.names[each.value.az_index]
 
   tags = merge(var.common_tags, {
     Name = "${var.project_name}-${each.key}"
@@ -137,6 +137,19 @@ module "s3" {
   source = "../modules/s3"
 
   bucket_prefix = "databricks-admin-lab-"
+
+  tags = {
+    Project     = "Future-Unicorn"
+    Environment = "Dev"
+    ManagedBy   = "Terraform"
+  }
+}
+
+module "iam" {
+  source = "../modules/iam"
+
+  policy_name = "databricks-admin-lab-s3-access"
+  bucket_arn  = module.s3.bucket_arn
 
   tags = {
     Project     = "Future-Unicorn"

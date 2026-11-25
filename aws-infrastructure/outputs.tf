@@ -45,3 +45,13 @@ output "s3_bucket_arn" {
   description = "Databricks lab S3 bucket ARN"
   value       = module.s3.bucket_arn
 }
+
+output "iam_policy_arn" {
+  description = "IAM S3 access policy ARN"
+  value       = module.iam.policy_arn
+}
+
+output "iam_policy_name" {
+  description = "IAM S3 access policy name"
+  value       = module.iam.policy_name
+}
