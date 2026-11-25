@@ -34,3 +34,14 @@ output "private_subnet_ids" {
     name => subnet.id
   }
 }
+
+
+output "s3_bucket_name" {
+  description = "Databricks lab S3 bucket name"
+  value       = module.s3.bucket_name
+}
+
+output "s3_bucket_arn" {
+  description = "Databricks lab S3 bucket ARN"
+  value       = module.s3.bucket_arn
+}

@@ -131,3 +131,16 @@ resource "aws_route_table_association" "private" {
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private.id
 }
+
+
+module "s3" {
+  source = "../modules/s3"
+
+  bucket_prefix = "databricks-admin-lab-"
+
+  tags = {
+    Project     = "Future-Unicorn"
+    Environment = "Dev"
+    ManagedBy   = "Terraform"
+  }
+}
