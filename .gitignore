@@ -1,0 +1,27 @@
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+vpc-plan
+crash.log
+crash.*.log
+*.tfvars
+!*.tfvars.example
+.terraform.tfstate.lock.info
+
+# Credentials and secrets
+.env
+.env.*
+*.pem
+*.key
+credentials
+.aws/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
